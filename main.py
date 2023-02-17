@@ -1,6 +1,9 @@
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
+from cambio_pdf import extract_currency_value
+import locale
 
+locale.setlocale(locale.LC_ALL, 'pt_BR')
 # Create a new PDF with Reportlab
 pdf = canvas.Canvas("invoice.pdf", pagesize=letter)
 
@@ -11,8 +14,8 @@ client_address = "123 Main St, Anytown USA"
 # myINFO
 my_name = "Victor"
 my_address = "456 Oak St, Anytown USA"
-subtotal = 500.00
-tax_rate = 0.1
+subtotal = locale.atof(extract_currency_value("cambio.pdf"))
+tax_rate = 0.0
 tax = subtotal * tax_rate
 total = subtotal + tax
 
@@ -62,8 +65,6 @@ pdf.drawRightString(550, 480, f"${tax:.2f}")
 pdf.line(400, 470, 550, 470)
 pdf.drawString(400, 450, "Total:")
 pdf.drawRightString(550, 450, f"${total:.2f}")
-
-
 
 # Notes
 pdf.setFont("Helvetica", 12)
