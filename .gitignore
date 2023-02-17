@@ -1,0 +1,11 @@
+# Ignore compiled Python files
+*.pyc
+
+# Ignore Python distribution folders
+__pycache__/
+dist/
+build/
+
+# Ignore local configuration files
+.env
+venv/
