@@ -1,6 +1,6 @@
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
-from cambio_pdf import extract_currency_value
+from pdf_utils import extract_currency_value
 import locale
 
 locale.setlocale(locale.LC_ALL, 'pt_BR')
