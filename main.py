@@ -14,17 +14,20 @@ client_address = "123 Main St, Anytown USA"
 # myINFO
 my_name = "Victor"
 my_address = "456 Oak St, Anytown USA"
-subtotal = locale.atof(extract_currency_value("cambio.pdf"))
+
+item1 = "Software Development"
+quantity = 1
+price = locale.atof(extract_currency_value("cambio.pdf"))
+subtotal = price * quantity
 tax_rate = 0.0
 tax = subtotal * tax_rate
 total = subtotal + tax
 
-# Set up some basic styles
-pdf.setFont("Helvetica-Bold", 20)
+
+pdf.setFont("Helvetica-Bold", 25)
 pdf.drawString(50, 750, f"INVOICE #{invoice_number}")
 pdf.setFont("Helvetica", 12)
 
-# Invoice information
 pdf.drawString(400, 735, f"Date: {invoice_date}")
 
 # Client information
@@ -35,11 +38,6 @@ pdf.drawString(50, 670, f"{client_address}")
 pdf.drawString(400, 700, f"Billed to:")
 pdf.drawString(400, 685, f"{my_name}")
 pdf.drawString(400, 670, f"{my_address}")
-
-# Item information
-item1 = "Software Development"
-quantity1 = 1
-price1 = 500.00
 
 # Table header
 pdf.setFillColorRGB(0.85, 0.85, 0.85)
@@ -53,8 +51,8 @@ pdf.drawString(450, 596, "Amount")
 # Table rows
 pdf.setFont("Helvetica", 12)
 pdf.drawString(60, 570, item1)
-pdf.drawString(300, 570, f"{quantity1}")
-pdf.drawString(450, 570, f"${price1:.2f}")
+pdf.drawString(300, 570, f"{quantity}")
+pdf.drawString(450, 570, f"${price:.2f}")
 
 # Total
 pdf.setFont("Helvetica", 12)
@@ -72,5 +70,4 @@ pdf.drawString(50, 420, "Notes:")
 pdf.drawString(50, 400, "Thank you for your business!")
 pdf.drawString(50, 380, "Please make payment within 30 days.")
 
-# Save the PDF
 pdf.save()
