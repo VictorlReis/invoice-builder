@@ -1,19 +1,28 @@
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
-from pdf_utils import extract_currency_value, extract_client_from_pdf
+from pdf_utils import extract_currency_value, extract_client_info_from_pdf, get_client_name_and_address_from_string, \
+    get_contractor_name_and_address_from_string
 import locale
-import os
+import time
+
+# Get the current Unix timestamp
+unix_timestamp = time.time()
+
+# Convert the timestamp to a struct_time object
+time_struct = time.localtime(unix_timestamp)
+
+# Format the date string using strftime
+date_string = time.strftime('%d/%m/%Y', time_struct)
 
 locale.setlocale(locale.LC_ALL, 'pt_BR')
 # Create a new PDF with Reportlab
 pdf = canvas.Canvas("invoice.pdf", pagesize=letter)
 
-invoice_number = os.getenv('INVOICE_NUMBER')
-invoice_date = os.getenv('INVOICE_DATE')
-client_name = extract_client_from_pdf("cambio.pdf")
-client_address = os.getenv('CLIENT_ADDRESS')
-my_name = os.getenv('MY_NAME')
-my_address = os.getenv('MY_ADDRESS')
+invoice_number = str(unix_timestamp)[-7:]
+invoice_date = date_string
+client_info = extract_client_info_from_pdf("cambio.pdf")
+client_name, client_address = get_client_name_and_address_from_string(client_info)
+my_name, my_address = get_contractor_name_and_address_from_string("cambio.pdf")
 
 item1 = "Software Development"
 quantity = 1
@@ -31,13 +40,29 @@ pdf.setFont("Helvetica", 12)
 pdf.drawString(400, 735, f"Date: {invoice_date}")
 
 # Client information
-pdf.drawString(50, 700, f"Bill by:")
+pdf.drawString(50, 700, f"Bill to:")
 pdf.drawString(50, 685, f"{client_name}")
-pdf.drawString(50, 670, f"{client_address}")
+# Split the address into lines with a maximum of 30 characters each
+address_lines = [client_address[i:i+30] for i in range(0, len(client_address), 30)]
 
-pdf.drawString(400, 700, f"Billed to:")
-pdf.drawString(400, 685, f"{my_name}")
-pdf.drawString(400, 670, f"{my_address}")
+# Draw each line of the address separately
+y = 670
+for line in address_lines:
+    pdf.drawString(50, y, line)
+    y -= 15  # Adjust y-coordinate for next line
+
+my_name_lines = [my_name[i:i+30] for i in range(0, len(my_name), 30)]
+my_address_lines = [my_address[i:i+30] for i in range(0, len(my_address), 30)]
+
+my_info = my_name_lines + my_address_lines
+
+pdf.drawString(350, 700, f"Billed by:")
+
+y = 685
+for line in my_info:
+    pdf.drawString(350, y, line)
+    y -= 15  # Adjust y-coo
+
 
 # Table header
 pdf.setFillColorRGB(0.85, 0.85, 0.85)

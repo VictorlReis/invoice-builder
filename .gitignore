@@ -9,3 +9,12 @@ build/
 # Ignore local configuration files
 .env
 venv/
+/.idea/.gitignore
+/cambio.pdf
+/.idea/git_toolbox_prj.xml
+/invoice.pdf
+/.idea/invoice-builder.iml
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/inspectionProfiles/profiles_settings.xml
+/.idea/vcs.xml
