@@ -20,3 +20,14 @@ def extract_currency_value(pdf_file_path):
         return match.group(1)
     else:
         print("No match found")
+
+
+def extract_client_from_pdf(pdf_file_path):
+    pdf_text = extract_text_from_pdf(pdf_file_path)
+    pattern = r'Pagador ou recebedor no exterior\*\n([^\n]+)\nPaís do pagador ou do recebedor no exterior\*'
+    match = re.search(pattern, pdf_text)
+
+    if match:
+        return match.group(1)
+    else:
+        print("No match found")

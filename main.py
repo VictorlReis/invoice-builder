@@ -1,19 +1,19 @@
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
-from pdf_utils import extract_currency_value
+from pdf_utils import extract_currency_value, extract_client_from_pdf
 import locale
+import os
 
 locale.setlocale(locale.LC_ALL, 'pt_BR')
 # Create a new PDF with Reportlab
 pdf = canvas.Canvas("invoice.pdf", pagesize=letter)
 
-invoice_number = "5"
-invoice_date = "2023-02-16"
-client_name = "John Doe"
-client_address = "123 Main St, Anytown USA"
-# myINFO
-my_name = "Victor"
-my_address = "456 Oak St, Anytown USA"
+invoice_number = os.getenv('INVOICE_NUMBER')
+invoice_date = os.getenv('INVOICE_DATE')
+client_name = extract_client_from_pdf("cambio.pdf")
+client_address = os.getenv('CLIENT_ADDRESS')
+my_name = os.getenv('MY_NAME')
+my_address = os.getenv('MY_ADDRESS')
 
 item1 = "Software Development"
 quantity = 1
