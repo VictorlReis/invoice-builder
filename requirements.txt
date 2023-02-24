@@ -1,2 +1,3 @@
 reportlab~=3.6.12
 pypdf2~=3.0.1
+python-dotenv~=0.21.1
