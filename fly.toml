@@ -1,4 +1,6 @@
-app = "invoice-builder-6554"
+# fly.toml file generated for sparkling-shadow-6484 on 2023-02-24T14:55:40-03:00
+
+app = "sparkling-shadow-6484"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
