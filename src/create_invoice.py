@@ -30,7 +30,7 @@ def create_invoice():
 
     item1 = "Software Development"
     quantity = 1
-    price = locale.atof(extract_currency_value(invoice_path))
+    price = float(extract_currency_value(invoice_path))
     subtotal = price * quantity
     tax_rate = 0.0
     tax = subtotal * tax_rate
