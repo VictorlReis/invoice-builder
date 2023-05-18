@@ -13,11 +13,11 @@ def extract_text_from_pdf(pdf_file_path):
 
 def extract_currency_value(pdf_file_path):
     pdf_text = extract_text_from_pdf(pdf_file_path)
-    pattern = r'USD\s+([\d,]+\.\d{2})\s*Ordenante'
+    pattern = r'USD\s+([\d,]+(?:\.\d{2})?)\s*Ordenante'
     match = re.search(pattern, pdf_text)
 
     if match:
-        return match.group(1)
+        return match.group(1).replace(",", "")
     else:
         print("No match found")
 
